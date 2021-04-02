@@ -57,13 +57,13 @@ jobs:
 
       # Setup environment
       - name: Use Node.js
-        id: cache-npm
         uses: actions/setup-node@v2
         with:
           check-latest: true
 
       # Caches
       - name: Cache node modules
+        id: cache-npm
         uses: actions/cache@v2
         with:
           path: ~/.npm
