@@ -1,9 +1,9 @@
 export default function request(input: RequestInfo, init?: RequestInit) {
-  this._currentFetch(input, init);
+  this._fetch(input, init);
 }
 
 // Set fetch to use based on environment
-request._currentFetch = typeof fetch === 'object' || null;
+request._fetch = typeof fetch === 'object' || null;
 
 // Middleware collection
 request._middleware = [];
@@ -12,7 +12,7 @@ request._middleware = [];
 request.setConfig = function (opts: { fetch: any }) {
   if (opts) {
     if (opts.fetch) {
-      this._currentFetch = fetch;
+      this._fetch = fetch;
     }
   }
 };
