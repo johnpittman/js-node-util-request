@@ -1,0 +1,7 @@
+*.ts linguist-detectable=true
+*.js linguist-detectable=true
+*.css linguist-detectable=false
+*.svg linguist-detectable=false
+*.woff linguist-detectable=false
+*.woff2 linguist-detectable=false
+*.html linguist-detectable=false

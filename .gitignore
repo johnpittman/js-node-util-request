@@ -1,0 +1,14 @@
+# Folders
+node_modules
+lib
+build
+
+# Files
+.*cache
+*.log
+
+# OS
+.DS_Store
+
+#IDE
+.vscode
