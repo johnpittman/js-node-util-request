@@ -1,3 +1,5 @@
+*** WARNING: IN DEVELOPMENT ***
+
 Enhanced native fetch implementation for real world use cases.
 
 # Features
