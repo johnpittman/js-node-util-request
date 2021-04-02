@@ -1,5 +1,5 @@
 export default function request(input: RequestInfo, init?: RequestInit) {
-    this._fetch(input, init);
+  this._fetch(input, init);
 }
 
 // Set fetch to use based on environment
