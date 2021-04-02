@@ -5,5 +5,5 @@ test('middleware collection exists', () => {
 });
 
 test('fetch reference exists', () => {
-  expect(request).toHaveProperty('_fetch');
+  expect(request).toHaveProperty('_fetc');
 });
