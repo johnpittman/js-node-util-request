@@ -15,11 +15,10 @@ Enhanced native fetch implementation for real world use cases.
 
 ### Handlers
 
-- Abort
-  - Creates an AbortController and adds 'abort' method to the fetch promise
-
 ## TODO
 
+- Abort middleware/integrated
+  - Creates an AbortController and adds 'abort' method to the fetch promise
 - Custom error responses
   - Format thrown errors
 - Handler: parse JSON based on content type
