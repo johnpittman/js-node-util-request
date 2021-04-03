@@ -28,11 +28,6 @@ Enhanced native fetch implementation for real world use cases.
 - Utility to know if abort error
 - Undecided: Custom error response formatting
 
-## TODO
-
-- Custom error responses
-  - Format thrown errors
-
 # Project
 
 Typescript node library.
