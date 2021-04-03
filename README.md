@@ -1,30 +1,32 @@
-*** WARNING: IN DEVELOPMENT ***
+**_ WARNING: IN DEVELOPMENT _**
 
 Enhanced native fetch implementation for real world use cases.
 
 # Features
 
+- Pluggable
 - Middleware
-  - ex. override headers
-- Response handlers
+  - Ex: Override headers
+- Handlers
   - Run in order as added
   - Reduce complexity of response handling
-  - Ex. parse JSON based on response type then turn it into an error
-- Pass custom options through the pipeline
-  - allow passed options to middleware/handlers
-- Handler: jsonParser
-  - parse fetch responses based on content-type
-- Middleware: jsonSender
-  - set fetch json headers
-
-# TODO
-
-- Merge user opts with global opts to avoid having to check both in middleware/handlers as well as forced to use 'function' syntax
-  since global opts are not piped through
+  - Ex: Parse JSON based on response type then turn it into an error
+- Custom Options
+  - Allow passed options to middleware/handlers
 
 ## Addons
 
-### Handlers
+- Handler: jsonParser
+  - Parse fetch responses based on content-type
+- Middleware: jsonSender
+  - Set fetch json headers
+- Middleware: query
+  - Adds query-string stringification
+
+## TODO
+
+- Utility to know if abort error
+- Undecided: Custom error response formatting
 
 ## TODO
 

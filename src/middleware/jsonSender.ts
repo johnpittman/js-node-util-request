@@ -1,6 +1,6 @@
 import { RequestMiddleware } from '@code/request';
 
-const jsonSender: RequestMiddleware = function (params) {
+const jsonSender: RequestMiddleware = (params) => {
   const fetchOpts = params.fetchOpts || {};
   const headers = fetchOpts.headers || {};
 

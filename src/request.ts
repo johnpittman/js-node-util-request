@@ -24,16 +24,21 @@ export interface AbortablePromise<T> extends Promise<T> {
   abort: () => void;
 }
 
-export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit = {}, userOpts?: UserOpts) {
+export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit = {}, userOpts: UserOpts = {}) {
+  const allUserOpts = {
+    ...request._userOpts,
+    ...userOpts
+  };
+
   const middelwareResult = request._processMiddleware({
     fetchInput,
     fetchOpts,
-    userOpts
+    userOpts: allUserOpts
   });
 
-  // Enable abortable from response.
+  // Enable abort controller
   let abortController = null;
-  if (request._userOpts.abortable || userOpts?.abortable) {
+  if (middelwareResult.userOpts.abortable == true) {
     abortController = new AbortController();
     fetchOpts.signal = abortController.signal;
   }
@@ -51,6 +56,7 @@ export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit 
       return handlersResponse;
     }) as AbortablePromise<any>;
 
+  // Add abort controller to final promise to be accessed by user.
   if (abortController) {
     resultPromise.abort = () => {
       abortController.abort();

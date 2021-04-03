@@ -16,9 +16,11 @@ async function testQueryString() {
       arrayFormat: 'comma'
     })
   );
-  //   console.log('extract w/o query', qs.extract('www.google.com'));
+  // console.log('extract: only query input', qs.extract('a=1&b=2'));
+  // console.log('extract w/ ?', qs.extract('www.google.com?'));
   //   console.log('extract w/ query', qs.extract('www.google.com?a=1&b=2'));
-  //   console.log('parseURL', qs.parseUrl('www.google.com?a=1&b=2'));
+  console.log('parseURL', qs.parseUrl('www.google.com?a=1&b=2'));
+  console.log('parseURL: no query', qs.parseUrl('www.google.com?'));
 }
 
 testQueryString();
