@@ -1,0 +1,18 @@
+import { RequestMiddleware } from '@code/request';
+
+const jsonMiddleware: RequestMiddleware = function (params) {
+  const fetchOpts = params.fetchOpts || {};
+  const headers = fetchOpts.headers || {};
+
+  if (!headers['Content-Type'] && !headers['content-type']) {
+    headers['content-type'] = 'application/json';
+  }
+
+  if (typeof fetchOpts.body === 'object') {
+    fetchOpts.body = JSON.stringify(fetchOpts.body);
+  }
+
+  return params;
+};
+
+export default jsonMiddleware;

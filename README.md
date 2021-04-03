@@ -8,10 +8,19 @@ Enhanced native fetch implementation for real world use cases.
   - ex. override headers
 - Response handlers
   - Run in order as added
-  - Configure handlers to reduce redundant response work
-  - Ex. parse JSON based on response type
-  - Ex. turn a response into an error
+  - Reduce complexity of response handling
+  - Ex. parse JSON based on response type then turn it into an error
 - Pass custom options through the pipeline
+  - allow passed options to middleware/handlers
+- Handler: jsonParser
+  - parse fetch responses based on content-type
+- Middleware: jsonSender
+  - set fetch json headers
+
+# TODO
+
+- Merge user fetch opts with global opts to avoid having to check both in middleware/handlers as well as forced to use 'function' syntax
+  since global opts are not piped through
 
 ## Addons
 
@@ -19,12 +28,8 @@ Enhanced native fetch implementation for real world use cases.
 
 ## TODO
 
-- Abort middleware/integrated
-  - Creates an AbortController and adds 'abort' method to the fetch promise
 - Custom error responses
   - Format thrown errors
-- Handler: parse JSON based on content type
-  - since options are passed through middleware, can add a key for middleware to check to run on not
 
 # Project
 
