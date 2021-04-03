@@ -19,7 +19,7 @@ Enhanced native fetch implementation for real world use cases.
 
 # TODO
 
-- Merge user fetch opts with global opts to avoid having to check both in middleware/handlers as well as forced to use 'function' syntax
+- Merge user opts with global opts to avoid having to check both in middleware/handlers as well as forced to use 'function' syntax
   since global opts are not piped through
 
 ## Addons
