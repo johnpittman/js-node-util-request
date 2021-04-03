@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import fetch from 'isomorphic-fetch';
 import request, { RequestMiddlewareParams, RequestHandlerParams } from '@code/request';
 
 request.init({ fetch });
@@ -67,6 +67,10 @@ describe('request', () => {
   });
 
   describe('.__processMiddleware', () => {
+    beforeAll(() => {
+      request.init();
+    });
+
     test('returns altered result', () => {
       let params = { fetchInput: url };
       request.use((params: RequestMiddlewareParams) => {
@@ -80,8 +84,12 @@ describe('request', () => {
   });
 
   describe('.__processHandlers', () => {
+    beforeAll(() => {
+      request.init();
+    });
+
     test('returns result in order', async () => {
-      let params = { fetchResponse: null, fetchInput: url, result: '' };
+      let params = { fetchResponse: new Response(), fetchInput: url, result: '' };
       let handler = async (params: RequestHandlerParams) => {
         let result = await new Promise((res) => {
           params.result += 'a';

@@ -1,4 +1,4 @@
-import { RequestMiddleware } from '@code/request';
+import type { RequestMiddleware } from '@code/request';
 
 let jsonSender: RequestMiddleware = (params) => {
   let fetchOpts = (params.fetchOpts = params.fetchOpts || {});
@@ -8,7 +8,7 @@ let jsonSender: RequestMiddleware = (params) => {
     headers['content-type'] = 'application/json';
   }
 
-  if (typeof fetchOpts.body === 'object') {
+  if (fetchOpts.body !== undefined) {
     fetchOpts.body = JSON.stringify(fetchOpts.body);
   }
 

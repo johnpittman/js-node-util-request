@@ -1,4 +1,4 @@
-import { RequestMiddleware, RequestMiddlewareParams } from '@code/request';
+import type { RequestMiddleware, RequestMiddlewareParams } from '@code/request';
 
 /**
  * Adds object literal query definition use.

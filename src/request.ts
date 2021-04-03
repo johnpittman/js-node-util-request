@@ -24,7 +24,11 @@ export interface AbortablePromise<T> extends Promise<T> {
   abort: () => void;
 }
 
-export default function request(fetchInput: RequestInfo, fetchOpts?: RequestInit, userOpts?: UserOpts) {
+export default function request(
+  fetchInput: RequestInfo,
+  fetchOpts?: RequestInit,
+  userOpts?: UserOpts
+): AbortablePromise<any> {
   // Override global opts with user input if passed by user
   let allUserOpts = userOpts
     ? {
@@ -42,8 +46,8 @@ export default function request(fetchInput: RequestInfo, fetchOpts?: RequestInit
 
   // Enable abort controller
   // Create fetch opts in none exist
-  let abortController = null;
-  if (middelwareResult.userOpts.abortable == true) {
+  let abortController: AbortController | null = null;
+  if (middelwareResult.userOpts?.abortable == true) {
     abortController = new AbortController();
 
     if (!fetchOpts) {
@@ -69,16 +73,16 @@ export default function request(fetchInput: RequestInfo, fetchOpts?: RequestInit
     }) as AbortablePromise<any>;
 
   // Add abort controller to final promise to be accessed by user.
-  if (abortController) {
+  if (abortController && resultPromise) {
     resultPromise.abort = () => {
-      abortController.abort();
+      abortController?.abort();
     };
   }
 
   return resultPromise;
 }
 
-request._fetch = typeof fetch === 'object' ? fetch : null;
+request._fetch = window.fetch || null;
 request._userOpts = null;
 request._middleware = null;
 request._handlers = null;
