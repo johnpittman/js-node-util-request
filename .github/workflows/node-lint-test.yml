@@ -1,4 +1,4 @@
-name: Node - Prepare Build
+name: Node - Lint & Test
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [master]
 
 jobs:
-  eslint:
-    name: 'Eslint'
+  lint:
+    name: 'Lint'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -25,12 +25,12 @@ export interface AbortablePromise<T> extends Promise<T> {
 }
 
 export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit = {}, userOpts: UserOpts = {}) {
-  const allUserOpts = {
+  let allUserOpts = {
     ...request._userOpts,
     ...userOpts
   };
 
-  const middelwareResult = request._processMiddleware({
+  let middelwareResult = request._processMiddleware({
     fetchInput,
     fetchOpts,
     userOpts: allUserOpts
@@ -45,10 +45,10 @@ export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit 
 
   // Typescript workaround to add abort property to promise.
   // Manually execute the Promise to avoid making 'request' an async function.
-  const resultPromise = request
+  let resultPromise = request
     ._fetch(middelwareResult.fetchInput, middelwareResult.fetchOpts)
     .then(async (fetchResponse) => {
-      const handlersResponse = await request._processHandlers({
+      let handlersResponse = await request._processHandlers({
         ...middelwareResult,
         fetchResponse
       });

@@ -1,8 +1,8 @@
 import { RequestMiddleware } from '@code/request';
 
-const jsonSender: RequestMiddleware = (params) => {
-  const fetchOpts = params.fetchOpts || {};
-  const headers = fetchOpts.headers || {};
+let jsonSender: RequestMiddleware = (params) => {
+  let fetchOpts = params.fetchOpts || {};
+  let headers = fetchOpts.headers || {};
 
   if (!headers['Content-Type'] && !headers['content-type']) {
     headers['content-type'] = 'application/json';

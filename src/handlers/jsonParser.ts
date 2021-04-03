@@ -1,7 +1,7 @@
 import { RequestHandler } from '@code/request';
 
-const jsonParser: RequestHandler = async (params) => {
-  const { fetchResponse } = params;
+let jsonParser: RequestHandler = async (params) => {
+  let { fetchResponse } = params;
 
   if (fetchResponse.ok === true && /application\/json/.test(fetchResponse.headers.get('content-type'))) {
     params.result = await fetchResponse.json();

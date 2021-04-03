@@ -4,11 +4,11 @@ import request, { RequestMiddlewareParams, RequestHandlerParams } from '@code/re
 request.init({ fetch });
 
 describe('request', () => {
-  const url = 'https://www.google.com';
-  const middleware = (params: RequestMiddlewareParams) => {
+  let url = 'https://www.google.com';
+  let middleware = (params: RequestMiddlewareParams) => {
     return params;
   };
-  const handler = (params: RequestHandlerParams) => {
+  let handler = (params: RequestHandlerParams) => {
     return params;
   };
 
@@ -24,7 +24,7 @@ describe('request', () => {
     });
 
     try {
-      const res = request(url);
+      let res = request(url);
       res.abort();
       await res;
     } catch (err) {
@@ -38,7 +38,7 @@ describe('request', () => {
     });
 
     test('init requestOpts', () => {
-      const obj = {};
+      let obj = {};
       request.init({ opts: obj });
       expect(request._userOpts).toBe(obj);
     });
