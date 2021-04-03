@@ -1,22 +1,29 @@
-import qs from 'query-string';
 import { RequestMiddleware, RequestMiddlewareParams } from '@code/request';
 
-let queryMiddleware: RequestMiddleware = (params: RequestMiddlewareParams) => {
-  if (params?.userOpts?.query) {
-    if (typeof params.fetchInput === 'string') {
-      let parsedURL = qs.parseUrl(params.fetchInput);
-      let queryStr = qs.stringify(
-        {
-          ...parsedURL.query,
-          ...params.userOpts.query
-        },
-        params.userOpts.queryOpts
-      );
-      params.fetchInput = `${parsedURL}?${queryStr}`;
-    }
-  }
+/**
+ * Adds object literal query definition use.
+ * @param queryStringPkg import queryString from 'query-string'
+ * @returns RequestMiddleware
+ */
+let queryMiddleware = (queryStringPkg: any): RequestMiddleware => {
+  return (params: RequestMiddlewareParams) => {
+    if (params?.userOpts?.query) {
+      if (typeof params.fetchInput === 'string') {
+        let parsedURL = queryStringPkg.parseUrl(params.fetchInput);
+        let queryStr = queryStringPkg.stringify(
+          {
+            ...parsedURL.query,
+            ...params.userOpts.query
+          },
+          params.userOpts.queryOpts
+        );
 
-  return params;
+        params.fetchInput = `${parsedURL}?${queryStr}`;
+      }
+    }
+
+    return params;
+  };
 };
 
 export default queryMiddleware;

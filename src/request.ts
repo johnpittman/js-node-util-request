@@ -83,19 +83,18 @@ request._userOpts = null;
 request._middleware = null;
 request._handlers = null;
 
+/**
+ * Set fetch if it's not native in nodejs
+ * Polyfill: https://www.npmjs.com/package/node-fetch
+ */
 request.init = (params?: { fetch?: Fetch; opts?: UserOpts }) => {
   request._middleware = [];
   request._handlers = [];
+  request._userOpts = params?.opts ? params.opts : {};
 
-  /**
-   * Set fetch if not browser or if it's not native in nodejs
-   * Polyfill: https://www.npmjs.com/package/node-fetch
-   */
   if (params?.fetch) {
     request._fetch = params.fetch;
   }
-
-  request._userOpts = params?.opts ? params.opts : {};
 };
 
 /**
