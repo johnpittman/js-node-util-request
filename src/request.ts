@@ -24,12 +24,16 @@ export interface AbortablePromise<T> extends Promise<T> {
   abort: () => void;
 }
 
-export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit = {}, userOpts: UserOpts = {}) {
-  let allUserOpts = {
-    ...request._userOpts,
-    ...userOpts
-  };
+export default function request(fetchInput: RequestInfo, fetchOpts?: RequestInit, userOpts?: UserOpts) {
+  // Override global opts with user input if passed by user
+  let allUserOpts = userOpts
+    ? {
+        ...request._userOpts,
+        ...userOpts
+      }
+    : request._userOpts;
 
+  // Run middleware
   let middelwareResult = request._processMiddleware({
     fetchInput,
     fetchOpts,
@@ -37,17 +41,25 @@ export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit 
   });
 
   // Enable abort controller
+  // Create fetch opts in none exist
   let abortController = null;
   if (middelwareResult.userOpts.abortable == true) {
     abortController = new AbortController();
+
+    if (!fetchOpts) {
+      fetchOpts = {};
+    }
+
     fetchOpts.signal = abortController.signal;
   }
 
-  // Typescript workaround to add abort property to promise.
+  // Initial fetch
+  // Typescript workaround of using '.then' to add abort property to promise.
   // Manually execute the Promise to avoid making 'request' an async function.
   let resultPromise = request
     ._fetch(middelwareResult.fetchInput, middelwareResult.fetchOpts)
     .then(async (fetchResponse) => {
+      // Run handlers
       let handlersResponse = await request._processHandlers({
         ...middelwareResult,
         fetchResponse
@@ -83,9 +95,7 @@ request.init = (params?: { fetch?: Fetch; opts?: UserOpts }) => {
     request._fetch = params.fetch;
   }
 
-  if (params?.opts) {
-    request._userOpts = params.opts;
-  }
+  request._userOpts = params?.opts ? params.opts : {};
 };
 
 /**

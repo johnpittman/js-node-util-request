@@ -37,7 +37,7 @@ describe('request', () => {
       request.init();
     });
 
-    test('init requestOpts', () => {
+    test('set options', () => {
       let obj = {};
       request.init({ opts: obj });
       expect(request._userOpts).toBe(obj);
@@ -67,7 +67,7 @@ describe('request', () => {
   });
 
   describe('.__processMiddleware', () => {
-    test('returns result', () => {
+    test('returns altered result', () => {
       let params = { fetchInput: url };
       request.use((params: RequestMiddlewareParams) => {
         params.fetchInput = '1';
@@ -80,7 +80,7 @@ describe('request', () => {
   });
 
   describe('.__processHandlers', () => {
-    test('returns result', async () => {
+    test('returns result in order', async () => {
       let params = { fetchResponse: null, fetchInput: url, result: '' };
       let handler = async (params: RequestHandlerParams) => {
         let result = await new Promise((res) => {
