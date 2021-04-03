@@ -1,12 +1,10 @@
-name: node-pre-build
+name: Node - Prepare Build
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   eslint:

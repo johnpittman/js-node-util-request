@@ -2,20 +2,20 @@ export type Fetch = (fetchInput: RequestInfo, fetchOpts?: RequestInit) => Promis
 /**
  * External options that allow the user to interaction with integrated features, middleware, and handlers.
  */
-export interface RequestOpts {
+export interface UserOpts {
   [key: string]: any;
   abortable?: boolean;
 }
 export interface RequestMiddlewareParams {
   fetchInput: RequestInfo;
   fetchOpts?: RequestInit;
-  requestOpts?: RequestOpts;
+  userOpts?: UserOpts;
 }
 export interface RequestHandlerParams {
   fetchResponse: Response;
   fetchInput: RequestInfo;
   fetchOpts?: RequestInit;
-  requestOpts?: RequestOpts;
+  userOpts?: UserOpts;
   result?: any;
 }
 export type RequestMiddleware = (params: RequestMiddlewareParams) => RequestMiddlewareParams;
@@ -24,16 +24,16 @@ export interface AbortablePromise<T> extends Promise<T> {
   abort: () => void;
 }
 
-export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit = {}, requestOpts?: RequestOpts) {
+export default function request(fetchInput: RequestInfo, fetchOpts: RequestInit = {}, userOpts?: UserOpts) {
   const middelwareResult = request._processMiddleware({
     fetchInput,
     fetchOpts,
-    requestOpts
+    userOpts
   });
 
   // Enable abortable from response.
   let abortController = null;
-  if (request._userOpts.abortable || requestOpts?.abortable) {
+  if (request._userOpts.abortable || userOpts?.abortable) {
     abortController = new AbortController();
     fetchOpts.signal = abortController.signal;
   }
@@ -65,12 +65,12 @@ request._userOpts = null;
 request._middleware = null;
 request._handlers = null;
 
-request.init = (params?: { fetch?: Fetch; opts?: RequestOpts }) => {
+request.init = (params?: { fetch?: Fetch; opts?: UserOpts }) => {
   request._middleware = [];
   request._handlers = [];
 
   /**
-   * Set fetch if browser or if it's finlly native in nodejs
+   * Set fetch if not browser or if it's not native in nodejs
    * Polyfill: https://www.npmjs.com/package/node-fetch
    */
   if (params?.fetch) {

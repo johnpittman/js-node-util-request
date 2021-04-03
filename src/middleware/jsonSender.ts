@@ -1,6 +1,6 @@
 import { RequestMiddleware } from '@code/request';
 
-const jsonMiddleware: RequestMiddleware = function (params) {
+const jsonSender: RequestMiddleware = function (params) {
   const fetchOpts = params.fetchOpts || {};
   const headers = fetchOpts.headers || {};
 
@@ -15,4 +15,4 @@ const jsonMiddleware: RequestMiddleware = function (params) {
   return params;
 };
 
-export default jsonMiddleware;
+export default jsonSender;
