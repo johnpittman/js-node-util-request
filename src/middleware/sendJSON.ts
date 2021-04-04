@@ -6,7 +6,7 @@ let sendJSON: RequestMiddleware = (params) => {
   if (fetchOpts) {
     let headers = (fetchOpts.headers = fetchOpts.headers || {});
     let contentType = headers['content-type'] || headers['Content-Type'];
-    let isNotJSON = contentType && (contentType !== 'application/json' || fetchOpts.body instanceof FormData);
+    let isNotJSON = (contentType && contentType !== 'application/json') || fetchOpts.body instanceof FormData;
 
     // Allow user to send what they want
     if (fetchOpts.body !== undefined && !isNotJSON) {

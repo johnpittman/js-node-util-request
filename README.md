@@ -16,9 +16,11 @@ Enhanced native fetch implementation for real world use cases.
 
 ## Addons
 
-- Handler: jsonParser
-  - Parse fetch responses based on content-type
-- Middleware: jsonSender
+- Handler: parseJSON
+
+  - Parse fetch responses into based on content-type
+
+- Middleware: sendJSON
   - Set fetch json headers
 - Middleware: query
   - Adds query-string stringification
@@ -26,9 +28,9 @@ Enhanced native fetch implementation for real world use cases.
 ## TODO
 
 - Utility to know if abort error
-- Undecided: Custom error response formatting
+- Custom error response formatting
 
-# Project
+# Development
 
 Typescript node library.
 

@@ -32,7 +32,7 @@ jobs:
         with:
           path: ./.eslintcache
           key: ${{ runner.os }}-cache-eslint
-
+      
       # Install
       - name: Install dependencies
         run: npm ci --no-audit --prefer-offline

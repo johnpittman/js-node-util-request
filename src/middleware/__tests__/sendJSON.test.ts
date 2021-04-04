@@ -9,11 +9,10 @@ describe('sendJSON', () => {
 
   beforeAll(() => {
     request.init();
+    request.use(sendJSON);
   });
 
   test('returns proper json fetch opts', async () => {
-    request.use(sendJSON);
-
     let result = request._processMiddleware({ fetchInput: '', fetchOpts: { body: true } });
 
     expect(result.fetchOpts?.headers && result.fetchOpts?.headers[contentTypeHeader]).toBe('application/json');
@@ -21,8 +20,6 @@ describe('sendJSON', () => {
   });
 
   test('custom content-type', async () => {
-    request.use(sendJSON);
-
     let result = request._processMiddleware({
       fetchInput: '',
       fetchOpts: { headers: { 'content-type': 'text/html' }, body: true }
@@ -30,5 +27,15 @@ describe('sendJSON', () => {
 
     expect(result.fetchOpts?.headers && result.fetchOpts?.headers[contentTypeHeader]).toBe('text/html');
     expect(result.fetchOpts?.body).toEqual(true);
+  });
+
+  test('pass FormData', async () => {
+    let result = request._processMiddleware({
+      fetchInput: '',
+      fetchOpts: { body: new FormData() }
+    });
+
+    expect(result.fetchOpts?.headers && result.fetchOpts?.headers[contentTypeHeader]).toBeUndefined();
+    expect(result.fetchOpts?.body instanceof FormData).toEqual(true);
   });
 });
