@@ -3,7 +3,6 @@ import type { RequestMiddlewareParams } from '@code/request';
 
 let query = (params: RequestMiddlewareParams) => {
   // Cannot set when fetchInput is a Request
-  queryString.stringify({});
   if (typeof params.fetchInput === 'string' && params.userOpts?.query) {
     let queryStr = queryString.stringify(params.userOpts.query, params.userOpts.queryOpts);
 
