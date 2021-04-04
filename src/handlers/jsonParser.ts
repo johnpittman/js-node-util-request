@@ -2,8 +2,9 @@ import type { RequestHandler, RequestHandlerParams } from '@code/request';
 
 let jsonParser: RequestHandler = async (params: RequestHandlerParams) => {
   let { fetchResponse } = params;
+  let contentType = fetchResponse.headers.get('content-type') || '';
 
-  if (/application\/json/.test(fetchResponse.headers.get('content-type') || '')) {
+  if (/application\/json/.test(contentType)) {
     let ok = fetchResponse.ok;
 
     params.result = await fetchResponse.json();
