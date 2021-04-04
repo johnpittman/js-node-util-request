@@ -125,7 +125,7 @@ request._errorHandler = null;
 
 /**
  * Set fetch if it's not native in nodejs
- * Polyfill: https://www.npmjs.com/package/node-fetch
+ * Polyfill: https://www.npmjs.com/package/isomorphic-fetch
  */
 request.init = (params?: { fetch?: Fetch; opts?: UserOpts }) => {
   request._middleware = [];
