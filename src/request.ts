@@ -6,7 +6,6 @@ export interface UserOpts {
   readonly [key: string]: any;
   readonly abortable?: boolean;
 }
-
 export interface RequestFetchOpts extends RequestInit {
   body?: any;
 }
@@ -26,6 +25,13 @@ export interface AbortablePromise<T> extends Promise<T> {
   abort: () => void;
 }
 
+/**
+ * Native fetch request with ability to pass custom options for middleware/handler functionality
+ * @param fetchInput RequestInfo
+ * @param fetchOpts RequestFetchOpts
+ * @param userOpts UserOpts
+ * @returns AbortablePromise<any>
+ */
 export default function request(
   fetchInput: RequestInfo,
   fetchOpts?: RequestFetchOpts,
@@ -135,17 +141,24 @@ request._processHandlers = async function (params: RequestHandlerParams): Promis
     resultParams = await handler(resultParams);
   }
 
+  // If no handlers were processed, return intial fetch for user to operate on
   result = resultParams.result || params.fetchResponse;
 
   return result;
 };
 
-// Insert middleware
+/**
+ * Insert middleware
+ * @param middleware RequestMiddleware
+ */
 request.use = function (middleware: RequestMiddleware) {
   request._middleware.push(middleware);
 };
 
-// Insert response handler
+/**
+ * Insert response handler
+ * @param handler RequestHandler
+ */
 request.handle = function (handler: RequestHandler) {
   request._handlers.push(handler);
 };

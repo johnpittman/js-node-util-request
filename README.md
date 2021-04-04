@@ -17,13 +17,12 @@ Enhanced native fetch implementation for real world use cases.
 ## Addons
 
 - Handler: parseJSON
-
   - Parse fetch responses into based on content-type
 
 - Middleware: sendJSON
   - Set fetch json headers
 - Middleware: query
-  - Adds query-string stringification
+  - Adds query-string stringification for url query
 
 ## TODO
 
