@@ -120,7 +120,7 @@ request._processMiddleware = function (params: RequestMiddlewareParams): Request
  * Pipe fetch response and information through middleware
  */
 request._processHandlers = async function (params: RequestHandlerParams): Promise<any> {
-  let result = params.fetchResponse;
+  let result = null;
 
   let index = -1;
   let len = request._handlers.length;
@@ -131,7 +131,7 @@ request._processHandlers = async function (params: RequestHandlerParams): Promis
     resultParams = await handler(resultParams);
   }
 
-  result = resultParams.result;
+  result = resultParams.result || params.fetchResponse;
 
   return result;
 };
