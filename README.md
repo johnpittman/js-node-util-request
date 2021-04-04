@@ -30,9 +30,9 @@ Enhanced native fetch implementation for real world use cases.
 - Utility to know if abort error
   - 'tryCatch' method extraction?
   - Method to look at error info to determine error type?
-- Helper methods for working with middleware
-  - set fetchOpts
-  - set userOpts
+- Helper methods for creating with middleware/handlers
+  - set fetchOpts/headers if don't exist
+  - set userOpts if dont' exist
 
 # Development
 
