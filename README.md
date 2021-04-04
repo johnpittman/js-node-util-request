@@ -4,7 +4,6 @@ Enhanced native fetch implementation for real world use cases.
 
 # Features
 
-- Pluggable
 - Middleware
   - Ex: Override headers
 - Handlers
@@ -12,7 +11,7 @@ Enhanced native fetch implementation for real world use cases.
   - Reduce complexity of response handling
   - Ex: Parse JSON based on response type then turn it into an error
 - Custom Options
-  - Allow passed options to middleware/handlers
+  - Pass options to middleware and handlers
 - Error Handling
   - Define error handler to format error responses
 
