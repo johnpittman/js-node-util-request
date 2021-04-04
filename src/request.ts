@@ -3,18 +3,20 @@ export type Fetch = (fetchInput: RequestInfo, fetchOpts?: RequestInit) => Promis
  * External options that allow the user to interaction with integrated features, middleware, and handlers.
  */
 export interface UserOpts {
-  [key: string]: any;
-  abortable?: boolean;
+  readonly [key: string]: any;
+  readonly abortable?: boolean;
+}
+
+export interface RequestFetchOpts extends RequestInit {
+  body?: any;
 }
 export interface RequestMiddlewareParams {
   fetchInput: RequestInfo;
-  fetchOpts?: RequestInit;
+  fetchOpts?: RequestFetchOpts;
   userOpts?: UserOpts;
 }
 export interface RequestHandlerParams {
   fetchResponse: Response;
-  fetchInput: RequestInfo;
-  fetchOpts?: RequestInit;
   userOpts?: UserOpts;
   result?: any;
 }
@@ -26,7 +28,7 @@ export interface AbortablePromise<T> extends Promise<T> {
 
 export default function request(
   fetchInput: RequestInfo,
-  fetchOpts?: RequestInit,
+  fetchOpts?: RequestFetchOpts,
   userOpts?: UserOpts
 ): AbortablePromise<any> {
   // Override global opts with user input if passed by user
@@ -38,7 +40,7 @@ export default function request(
     : request._userOpts;
 
   // Run middleware
-  let middelwareResult = request._processMiddleware({
+  let middlewareResult = request._processMiddleware({
     fetchInput,
     fetchOpts,
     userOpts: allUserOpts
@@ -47,7 +49,7 @@ export default function request(
   // Enable abort controller
   // Create fetch opts in none exist
   let abortController: AbortController | null = null;
-  if (middelwareResult.userOpts?.abortable == true) {
+  if (middlewareResult.userOpts?.abortable == true) {
     abortController = new AbortController();
 
     if (!fetchOpts) {
@@ -61,12 +63,12 @@ export default function request(
   // Typescript workaround of using '.then' to add abort property to promise.
   // Manually execute the Promise to avoid making 'request' an async function.
   let resultPromise = request
-    ._fetch(middelwareResult.fetchInput, middelwareResult.fetchOpts)
+    ._fetch(middlewareResult.fetchInput, middlewareResult.fetchOpts)
     .then(async (fetchResponse) => {
       // Run handlers
       let handlersResponse = await request._processHandlers({
-        ...middelwareResult,
-        fetchResponse
+        fetchResponse,
+        userOpts: middlewareResult.userOpts
       });
 
       return handlersResponse;
@@ -82,7 +84,7 @@ export default function request(
   return resultPromise;
 }
 
-request._fetch = window.fetch || null;
+request._fetch = typeof window === 'object' ? window.fetch : fetch;
 request._userOpts = null;
 request._middleware = null;
 request._handlers = null;
@@ -100,6 +102,8 @@ request.init = (params?: { fetch?: Fetch; opts?: UserOpts }) => {
     request._fetch = params.fetch;
   }
 };
+
+request.init();
 
 /**
  * Pipe fetch information through middleware
@@ -145,5 +149,3 @@ request.use = function (middleware: RequestMiddleware) {
 request.handle = function (handler: RequestHandler) {
   request._handlers.push(handler);
 };
-
-request.init();
