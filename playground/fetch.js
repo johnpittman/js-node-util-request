@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const fetch = require('isomorphic-fetch');
 
 async function testFetch() {
   let res = await fetch('https://www.google.com');
@@ -11,9 +11,10 @@ async function testFetch() {
   console.log(res.timeout);
   console.log('headers', res.headers.get('content-type'));
 
-  let result = null;
-  result = await res.text();
-  console.log(result.status);
+  // let result = await res.text();
+  // let result2 = await res.blob();
+  // console.log(result.status);
+  // console.log(result2.status);
 }
 
 testFetch();
