@@ -1,4 +1,4 @@
-**_ WARNING: IN DEVELOPMENT _**
+** WARNING: UNDER DEVELOPMENT **
 
 Enhanced native fetch implementation for real world use cases.
 
@@ -13,6 +13,8 @@ Enhanced native fetch implementation for real world use cases.
   - Ex: Parse JSON based on response type then turn it into an error
 - Custom Options
   - Allow passed options to middleware/handlers
+- Error Handling
+  - Define error handler to format error responses
 
 ## Addons
 
@@ -27,7 +29,8 @@ Enhanced native fetch implementation for real world use cases.
 ## TODO
 
 - Utility to know if abort error
-- Custom error response formatting
+  - 'tryCatch' method extraction?
+  - Method to look at error info to determine error type?
 
 # Development
 

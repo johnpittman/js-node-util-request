@@ -11,6 +11,9 @@ describe('request', () => {
   let handler = (params: RequestHandlerParams) => {
     return params;
   };
+  let errorHandler = (err: any) => {
+    return 'error';
+  };
 
   beforeAll(() => {
     request.init();
@@ -66,6 +69,17 @@ describe('request', () => {
     });
   });
 
+  describe('.handleError', () => {
+    beforeAll(() => {
+      request.init();
+      request.handleError(errorHandler);
+    });
+
+    test('adds error handler', () => {
+      expect(typeof request._errorHandler).toEqual('function');
+    });
+  });
+
   describe('.__processMiddleware', () => {
     beforeAll(() => {
       request.init();
@@ -84,36 +98,50 @@ describe('request', () => {
   });
 
   describe('.__processHandlers', () => {
+    let handler = async (params: RequestHandlerParams) => {
+      let result = await new Promise((res) => {
+        params.result += 'a';
+        res(params);
+      });
+
+      return result as Promise<RequestHandlerParams>;
+    };
+
+    let handler2 = async (params: RequestHandlerParams) => {
+      let result = await new Promise((res) => {
+        params.result += 'b';
+        res(params);
+      });
+
+      return result as Promise<RequestHandlerParams>;
+    };
+
     beforeAll(() => {
       request.init();
+      request.handle(handler);
+      request.handle(handler2);
     });
 
     test('returns result in order', async () => {
       let params = { fetchResponse: new Response(), fetchInput: url, result: '' };
-      let handler = async (params: RequestHandlerParams) => {
-        let result = await new Promise((res) => {
-          params.result += 'a';
-          res(params);
-        });
-
-        return result as Promise<RequestHandlerParams>;
-      };
-
-      let handler2 = async (params: RequestHandlerParams) => {
-        let result = await new Promise((res) => {
-          params.result += 'b';
-          res(params);
-        });
-
-        return result as Promise<RequestHandlerParams>;
-      };
-
-      request.handle(handler);
-      request.handle(handler2);
-
       let result = await request._processHandlers(params);
 
       expect(result).toEqual('ab');
+    });
+  });
+
+  describe('._requestErrors', () => {
+    beforeAll(() => {
+      request.init();
+      request.handleError(errorHandler);
+    });
+
+    test('returns', async () => {
+      try {
+        await request._requestErrors('');
+      } catch (err) {
+        expect(err).toEqual('error');
+      }
     });
   });
 });

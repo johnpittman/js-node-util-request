@@ -29,7 +29,7 @@ describe('sendJSON', () => {
     expect(result.fetchOpts?.body).toEqual(true);
   });
 
-  test('pass FormData', async () => {
+  test('does not override when passing FormData', async () => {
     let result = request._processMiddleware({
       fetchInput: '',
       fetchOpts: { body: new FormData() }
