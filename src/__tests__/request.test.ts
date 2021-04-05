@@ -11,7 +11,7 @@ describe('request', () => {
   let handler = (params: RequestHandlerParams) => {
     return params;
   };
-  let errorHandler = (err: any) => {
+  let errorHandler = () => {
     return 'error';
   };
 
