@@ -29,10 +29,6 @@ export type RequestErrorHandler = (err: RequestError) => any;
 
 /**
  * Native fetch request with ability to pass custom options for middleware/handler functionality
- * @param fetchInput RequestInfo
- * @param fetchOpts RequestFetchOpts
- * @param userOpts UserOpts
- * @returns AbortablePromise<any>
  */
 export default function request(
   fetchInput: RequestInfo,
@@ -191,7 +187,6 @@ request._processErrorHandlers = function (err: RequestError) {
 
 /**
  * Insert middleware
- * @param middleware RequestMiddleware
  */
 request.use = function (middleware: RequestMiddleware) {
   request._middleware.push(middleware);
@@ -199,7 +194,6 @@ request.use = function (middleware: RequestMiddleware) {
 
 /**
  * Insert response handler
- * @param handler RequestHandler
  */
 request.handle = function (handler: RequestHandler) {
   request._handlers.push(handler);
@@ -207,7 +201,6 @@ request.handle = function (handler: RequestHandler) {
 
 /**
  * Define error handler
- * @param handler RequestErrorHandler
  */
 request.handleError = function (handler: RequestErrorHandler) {
   request._errorHandler = handler;
@@ -215,8 +208,7 @@ request.handleError = function (handler: RequestErrorHandler) {
 
 /**
  * Checks if error handlers exist
- * @returns boolean
  */
-request._hasErrorHandlers = function () {
+request._hasErrorHandlers = function (): boolean {
   return !!request._errorHandler;
 };

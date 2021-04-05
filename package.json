@@ -24,7 +24,7 @@
     "url": "https://github.com/johnpittman"
   },
   "license": "MIT",
-  "description": "Fetch with enchanced functionality",
+  "description": "Wrapper of 'fetch' with enhanced functionality",
   "keywords": [],
   "private": true,
   "repository": {
