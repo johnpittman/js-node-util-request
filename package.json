@@ -16,7 +16,7 @@
     "test": "jest --runInBand --passWithNoTests --silent",
     "test:changed": "npm run test -- --changedSince=master",
     "test:watch": "npm run test -- --watch",
-    "typecheck": "ttsc --p tsconfig-build.json"
+    "typecheck": "ttsc --p tsconfig-build.json -incremental --tsBuildInfoFile tsconfig-build.tsbuildinfo"
   },
   "author": {
     "name": "John Pittman",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "description": "Wrapper of 'fetch' with enhanced functionality",
   "keywords": [],
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/johnpittman/request.git"
