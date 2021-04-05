@@ -13,7 +13,7 @@
     "lint": "npm run lint:eslint",
     "lint:eslint": "eslint '**/*.{js,jsx,ts,tsx,json}' --ignore-pattern '*-lock.json' --ignore-path '.gitignore' --fix --cache",
     "lint:staged": "lint-staged",
-    "test": "jest --passWithNoTests --silent",
+    "test": "jest --runInBand --passWithNoTests --silent",
     "test:changed": "npm run test -- --changedSince=master",
     "test:watch": "npm run test -- --watch",
     "typecheck": "ttsc --p tsconfig-build.json"
