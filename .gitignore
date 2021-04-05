@@ -1,11 +1,12 @@
-# Folders
+# Dev
 node_modules
 lib
 build
-
-# Files
-.*cache
 *.log
+
+# Cache
+.*cache
+*.tsbuildinfo
 
 # OS
 .DS_Store

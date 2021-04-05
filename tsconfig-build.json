@@ -3,7 +3,10 @@
   "exclude": ["src/**/__*"],
   "include": ["src/**/*"],
   "compilerOptions": {
+    "declaration": true,
     "declarationDir": "lib",
-    "outDir": "lib"
+    "incremental": true,
+    "outDir": "lib",
+    "tsBuildInfoFile": "tsconfig-build.tsbuildinfo"
   }
 }
