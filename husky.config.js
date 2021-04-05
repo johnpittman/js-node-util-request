@@ -5,6 +5,6 @@ module.exports = {
     'post-checkout': `if [[ $HUSKY_GIT_PARAMS =~ 1$ ]]; then ${runPackageLock}; fi`,
     'post-merge': runPackageLock,
     'post-rebase': runPackageLock,
-    'pre-commit': 'npm run typecheck && npm test && npm run lint:staged'
+    'pre-commit': 'npm run typecheck && npm run test:changed && npm run lint:staged'
   }
 };
