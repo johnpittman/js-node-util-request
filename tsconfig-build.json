@@ -5,8 +5,6 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "lib",
-    "incremental": true,
-    "outDir": "lib",
-    "tsBuildInfoFile": "tsconfig-build.tsbuildinfo"
+    "outDir": "lib"
   }
 }
