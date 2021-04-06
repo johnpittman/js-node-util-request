@@ -1,4 +1,4 @@
-import type { RequestHandler, RequestHandlerParams } from '@code/request';
+import { RequestHandler, RequestHandlerParams } from '@code/request';
 
 let jsonParser: RequestHandler = async (params: RequestHandlerParams) => {
   let { fetchResponse } = params;

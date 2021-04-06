@@ -1,4 +1,4 @@
-import type { RequestMiddleware } from '@code/request';
+import { RequestMiddleware } from '@code/request';
 
 let sendJSON: RequestMiddleware = (params) => {
   let { fetchOpts } = params;
