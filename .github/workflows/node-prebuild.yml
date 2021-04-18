@@ -30,7 +30,7 @@ jobs:
       - name: Cache tsc
         uses: actions/cache@v2
         with:
-          path: ./tsconfig.tsbuildinfo.json
+          path: ./tsconfig-build.tsbuildinfo
           key: ${{ runner.os }}-cache-tsc
 
       # Install

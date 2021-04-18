@@ -1,5 +1,5 @@
 {
-  "name": "request",
+  "name": "@johnpittman/request",
   "version": "0.0.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.js",
@@ -7,16 +7,18 @@
     "lib"
   ],
   "scripts": {
-    "bench": "for f in $(ls src/**/__bench/**/*.bench.ts); do ts-node $f; done",
-    "build": "npm run clean && ttsc --p tsconfig.json",
+    "bench": "for f in $(ls src/**/__bench__/**/*.bench.ts); do ts-node $f; done",
+    "build": "npm run clean && npm run build:ts --",
+    "build:ts": "ttsc --p tsconfig-build.json",
+    "build:watch": "npm run build -- --watch",
     "clean": "rm -rf lib",
     "lint": "npm run lint:eslint",
-    "lint:eslint": "eslint '**/*.{js,jsx,ts,tsx,json}' --ignore-pattern '*-lock.json' --ignore-path '.gitignore' --fix --cache",
+    "lint:eslint": "eslint '**/*.{js,jsx,ts,tsx,json,html}' --ignore-pattern '*-lock.json' --ignore-path '.gitignore' --fix --cache",
     "lint:staged": "lint-staged",
     "test": "jest --runInBand --passWithNoTests --silent",
     "test:changed": "npm run test -- --changedSince=master",
     "test:watch": "npm run test -- --watch",
-    "typecheck": "ttsc --p tsconfig.json -incremental --tsBuildInfoFile tsconfig.tsbuildinfo"
+    "typecheck": "ttsc --p tsconfig-build.json -incremental --tsBuildInfoFile tsconfig-build.tsbuildinfo"
   },
   "author": {
     "name": "John Pittman",
