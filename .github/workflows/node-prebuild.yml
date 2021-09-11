@@ -1,0 +1,108 @@
+name: Node - Prebuild
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  typecheck:
+    name: 'Typecheck'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: technote-space/get-diff-action@v4
+        id: git-diff
+        with:
+          PATTERNS: |
+            src/**/*.{ts,tsx}
+            **/tsconfig.json
+            **/tsconfig*.json
+
+      # Setup
+      - name: Setup
+        uses: actions/setup-node@v2
+        with:
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
+        if: steps.git-diff.outputs.diff
+
+      # Install
+      - name: Install dependencies
+        run: npm ci --no-audit --prefer-offline --ignore-scripts
+        if: steps.git-diff.outputs.diff
+
+      # Run
+      - name: Typecheck
+        run: npm run typecheck
+        if: steps.git-diff.outputs.diff
+
+  lint:
+    name: 'Lint'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: technote-space/get-diff-action@v4
+        with:
+          PATTERNS: |
+            **/*.{js,jsx,ts,tsx,json,html}
+
+      # Setup
+      - name: Setup
+        uses: actions/setup-node@v2
+        with:
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
+        if: steps.git-diff.outputs.diff
+
+      # Install
+      - name: Install dependencies
+        run: npm ci --no-audit --prefer-offline
+        if: steps.git-diff.outputs.diff
+
+      # Run
+      - name: Lint
+        run: npm run lint
+        if: steps.git-diff.outputs.diff
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.1.2
+        with:
+          commit_message: 'style: format'
+          branch: ${{ github.head_ref }}
+        if: steps.git-diff.outputs.diff
+
+  test:
+    needs: [lint, typecheck]
+    name: 'Test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: technote-space/get-diff-action@v4
+        id: git-diff
+        with:
+          PATTERNS: |
+            **/*.test.*
+            src/**/*.*
+
+      # Setup
+      - name: Setup
+        uses: actions/setup-node@v2
+        with:
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
+        if: steps.git-diff.outputs.diff
+
+      # Install
+      - name: Install dependencies
+        run: npm ci --no-audit --prefer-offline
+        if: steps.git-diff.outputs.diff
+
+      # Run
+      - name: Test
+        run: npm run test
+        if: steps.git-diff.outputs.diff

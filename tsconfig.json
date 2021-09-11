@@ -13,8 +13,8 @@
     "moduleResolution": "Node",
     "noImplicitAny": false,
     "paths": {
-      "@code/*": ["./src/*"],
-      "@root/*": ["./*"]
+      "~/*": ["./*"],
+      ">/*": ["./src/*"]
     },
     "plugins": [
       { "transform": "typescript-transform-paths" },

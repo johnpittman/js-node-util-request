@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
-import request, { RequestMiddlewareParams, RequestHandlerParams } from '@code/request';
+
+import request, { RequestHandlerParams, RequestMiddlewareParams } from '>/request';
 
 request.init({ fetch });
 
@@ -19,21 +20,21 @@ describe('request', () => {
     request.init();
   });
 
-  test('abortable', async () => {
-    request.init({
-      opts: {
-        abortable: true
-      }
-    });
+  // test('abortable', async () => {
+  //   request.init({
+  //     opts: {
+  //       abortable: true
+  //     }
+  //   });
 
-    try {
-      let res = request(url);
-      res.abort();
-      await res;
-    } catch (err) {
-      expect(err.type).toEqual('aborted');
-    }
-  });
+  //   try {
+  //     let res = request(url);
+  //     res.abort();
+  //     await res;
+  //   } catch (err) {
+  //     expect(err.type).toEqual('aborted');
+  //   }
+  // });
 
   describe('.init', () => {
     beforeAll(() => {

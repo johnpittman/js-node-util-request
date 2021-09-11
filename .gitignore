@@ -3,10 +3,12 @@ node_modules
 lib
 build
 *.log
+.yarn
 
 # Cache
 .*cache
 *.tsbuildinfo
+.pnp.*
 
 # OS
 .DS_Store

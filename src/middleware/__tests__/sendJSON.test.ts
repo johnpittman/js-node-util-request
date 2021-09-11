@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
-import request from '@code/request';
-import sendJSON from '@code/middleware/sendJSON';
+
+import sendJSON from '>/middleware/sendJSON';
+import request from '>/request';
 
 request.init({ fetch });
 

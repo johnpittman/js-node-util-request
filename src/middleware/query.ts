@@ -1,5 +1,6 @@
 import queryString from 'query-string';
-import { RequestMiddlewareParams } from '@code/request';
+
+import { RequestMiddlewareParams } from '>/request';
 
 let query = (params: RequestMiddlewareParams) => {
   // Cannot set when fetchInput is a Request

@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
-import request from '@code/request';
-import parseJSON from '@code/handlers/parseJSON';
+
+import parseJSON from '>/handlers/parseJSON';
+import request from '>/request';
 
 request.init({ fetch });
 

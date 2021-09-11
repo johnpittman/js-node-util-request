@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
-import request from '@code/request';
-import query from '@code/middleware/query';
+
+import query from '>/middleware/query';
+import request from '>/request';
 
 request.init({ fetch });
 
