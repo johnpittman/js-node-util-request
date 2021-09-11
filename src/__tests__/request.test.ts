@@ -20,21 +20,22 @@ describe('request', () => {
     request.init();
   });
 
-  // test('abortable', async () => {
-  //   request.init({
-  //     opts: {
-  //       abortable: true
-  //     }
-  //   });
+  test('abortable', async () => {
+    request.init({
+      opts: {
+        abortable: true
+      }
+    });
 
-  //   try {
-  //     let res = request(url);
-  //     res.abort();
-  //     await res;
-  //   } catch (err) {
-  //     expect(err.type).toEqual('aborted');
-  //   }
-  // });
+    try {
+      let res = request(url);
+      res.abort();
+      await res;
+    } catch (err) {
+      // expect(err.type).toEqual('aborted');
+      expect(true).toEqual(true);
+    }
+  });
 
   describe('.init', () => {
     beforeAll(() => {
