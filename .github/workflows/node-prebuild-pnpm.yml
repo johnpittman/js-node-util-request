@@ -23,9 +23,17 @@ jobs:
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: './pnpm-lock.yaml'
+
+      # Caches
+      - name: Cache eslint
+        uses: actions/cache@v2
+        with:
+          path: ./.eslintcache
+          key: ${{ runner.os }}-cache-eslint
       
       # Install
       - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
         run: pnpm install
 
       # Run

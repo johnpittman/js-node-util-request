@@ -1,0 +1,44 @@
+name: Node - Prebuild
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint:
+    name: 'Lint'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Setup
+      - name: Setup
+        uses: actions/setup-node@v2
+        with:
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
+
+      # Caches
+      - name: Cache eslint
+        uses: actions/cache@v2
+        with:
+          path: ./.eslintcache
+          key: ${{ runner.os }}-cache-eslint
+      
+      # Install
+      - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --no-audit
+
+      # Run
+      - name: Lint
+        run: npm run lint
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.1.2
+        with:
+          commit_message: 'style: format'
+          branch: ${{ github.head_ref }}
