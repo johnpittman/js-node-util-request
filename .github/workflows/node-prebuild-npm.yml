@@ -25,12 +25,12 @@ jobs:
       - name: Install
         run: npm ci --prefer-offline --no-audit --ignore-scripts
 
-      # Run
-      # - name: Cache eslint
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ./.eslintcache
-      #     key: ${{ runner.os }}-cache-eslint
+      # Execute
+      - name: Cache eslint
+        uses: actions/cache@v2
+        with:
+          path: ./.eslintcache
+          key: ${{ runner.os }}-cache-eslint
 
       - name: Lint
         run: npm run lint
