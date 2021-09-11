@@ -8,16 +8,16 @@
   ],
   "scripts": {
     "bench": "for f in $(ls src/**/__bench__/**/*.bench.ts); do ts-node $f; done",
-    "build": "npm run clean && npm run build:ts --",
+    "build": "pnpm run clean && pnpm run build:ts --",
     "build:ts": "ttsc --p tsconfig-build.json",
-    "build:watch": "npm run build -- --watch",
+    "build:watch": "pnpm run build -- --watch",
     "clean": "rm -rf lib",
-    "lint": "npm run lint:eslint",
+    "lint": "pnpm run lint:eslint",
     "lint:eslint": "eslint '**/*.{js,jsx,ts,tsx,json,html}' --ignore-pattern '*-lock.json' --ignore-path '.gitignore' --fix --cache",
     "lint:staged": "lint-staged",
     "test": "jest --runInBand --passWithNoTests --silent",
-    "test:changed": "npm run test -- --changedSince=master",
-    "test:watch": "npm run test -- --watch",
+    "test:changed": "pnpm run test -- --changedSince=master",
+    "test:watch": "pnpm run test -- --watch",
     "typecheck": "ttsc --p tsconfig-build.json -incremental --tsBuildInfoFile tsconfig-build.tsbuildinfo"
   },
   "author": {
