@@ -17,7 +17,8 @@ jobs:
       - name: Setup
         uses: actions/setup-node@v2
         with:
-          check-latest: true
+          # check-latest: true
+          node-version: 16
           cache: 'pnpm'
           cache-dependency-path: |
             '**/pnpm-lock.yaml'
@@ -26,7 +27,7 @@ jobs:
       # Install
       - name: Install
         run: |
-          sudo npm i -g pnpm
+          npm i -g pnpm
           pnpm i
 
       # Run
