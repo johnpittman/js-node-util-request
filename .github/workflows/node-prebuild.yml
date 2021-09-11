@@ -26,7 +26,7 @@ jobs:
       # Install
       - name: Install
         run: |
-          npm i -g pnpm
+          sudo npm i -g pnpm
           pnpm i
 
       # Run
