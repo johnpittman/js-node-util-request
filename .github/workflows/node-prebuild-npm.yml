@@ -20,20 +20,18 @@ jobs:
           check-latest: true
           cache: 'npm'
           cache-dependency-path: './package-lock.json'
-
-      # Caches
-      - name: Cache eslint
-        uses: actions/cache@v2
-        with:
-          path: ./.eslintcache
-          key: ${{ runner.os }}-cache-eslint
       
       # Install
       - name: Install
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --no-audit
+        run: npm ci --prefer-offline --no-audit --ignore-scripts
 
       # Run
+      # - name: Cache eslint
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ./.eslintcache
+      #     key: ${{ runner.os }}-cache-eslint
+
       - name: Lint
         run: npm run lint
 
