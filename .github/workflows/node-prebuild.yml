@@ -25,10 +25,11 @@ jobs:
             '**/.eslintcache'
       
       # Install
+      - name: Install PNPM
+        run: npm i -g pnpm
+
       - name: Install
-        run: |
-          npm i -g pnpm
-          pnpm i
+        run: pnpm i
 
       # Run
       - name: Lint
