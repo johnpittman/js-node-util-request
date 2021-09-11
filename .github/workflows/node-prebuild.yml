@@ -12,16 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: technote-space/get-diff-action@v4
-        with:
-          PATTERNS: |
-            ./src/**/*.{ts,tsx}
-            **/tsconfig.json
-            **/tsconfig*.json
 
       # Setup
       - name: Setup
-        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
@@ -30,12 +23,10 @@ jobs:
 
       # Install
       - name: Install dependencies
-        if: env.GIT_DIFF
-        run: npm ci --no-audit -ignore-scripts --ignore-scripts
+        run: npm ci --no-audit --prefer-offline --ignore-scripts --ignore-scripts
 
       # Run
       - name: Typecheck
-        if: env.GIT_DIFF
         run: npm run typecheck
 
   lint:
@@ -43,14 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: technote-space/get-diff-action@v4
-        with:
-          PATTERNS: |
-            **/*.{js,jsx,ts,tsx,json,html}
 
       # Setup
       - name: Setup
-        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
@@ -59,16 +45,13 @@ jobs:
 
       # Install
       - name: Install dependencies
-        if: env.GIT_DIFF
-        run: npm ci --no-audit -ignore-scripts
+        run: npm ci --no-audit --prefer-offline --ignore-scripts
 
       # Run
       - name: Lint
-        if: env.GIT_DIFF
         run: npm run lint
 
       - name: Commit changes
-        if: env.GIT_DIFF
         uses: stefanzweifel/git-auto-commit-action@v4.1.2
         with:
           commit_message: 'style: format'
@@ -81,15 +64,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: technote-space/get-diff-action@v4
-        with:
-          PATTERNS: |
-            **/*.test.*
-            ./src/**/*.*
 
       # Setup
       - name: Setup
-        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
@@ -99,10 +76,8 @@ jobs:
 
       # Install
       - name: Install dependencies
-        if: env.GIT_DIFF
-        run: npm ci --no-audit -ignore-scripts
+        run: npm ci --no-audit --prefer-offline --ignore-scripts
 
       # Run
       - name: Test
-        if: env.GIT_DIFF
         run: npm run test
