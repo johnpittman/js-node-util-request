@@ -16,7 +16,7 @@ jobs:
         id: git-diff
         with:
           PATTERNS: |
-            src/**/*.{ts,tsx}
+            ./src/**/*.{ts,tsx}
             **/tsconfig.json
             **/tsconfig*.json
 
@@ -86,7 +86,7 @@ jobs:
         with:
           PATTERNS: |
             **/*.test.*
-            src/**/*.*
+            ./src/**/*.*
 
       # Setup
       - name: Setup
