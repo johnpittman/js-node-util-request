@@ -20,7 +20,6 @@ describe('request', () => {
     request.init();
   });
 
-  // Weird new error
   // test('abortable', async () => {
   //   request.init({
   //     opts: {
