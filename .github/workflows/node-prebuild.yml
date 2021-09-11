@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Install
-      - name: Install
+      # Setup
+      - name: Setup
         uses: actions/setup-node@v2
         with:
           check-latest: true
@@ -22,6 +22,9 @@ jobs:
           cache-dependency-path: |
             '**/pnpm-lock.yaml'
             '**/.eslintcache'
+      
+      # Install
+      - name: Install
         run: |
           npm i -g pnpm
           pnpm i
