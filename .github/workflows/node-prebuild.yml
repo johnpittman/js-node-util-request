@@ -20,12 +20,8 @@ jobs:
       - name: Setup
         uses: actions/setup-node@v2
         with:
-          # check-latest: true
-          node-version: 16
+          check-latest: true
           cache: 'pnpm'
-          cache-dependency-path: |
-            './pnpm-lock.yaml'
-            './.eslintcache'
       
       # Install
       - name: Install
