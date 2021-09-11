@@ -26,10 +26,10 @@ jobs:
       
       # Install
       - name: Install PNPM
-        run: npm i -g pnpm
+        run: npm add -g pnpm
 
       - name: Install
-        run: pnpm i
+        run: pnpm install
 
       # Run
       - name: Lint
