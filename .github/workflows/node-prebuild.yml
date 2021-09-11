@@ -13,7 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: technote-space/get-diff-action@v4
-        id: git-diff
         with:
           PATTERNS: |
             ./src/**/*.{ts,tsx}
@@ -22,22 +21,22 @@ jobs:
 
       # Setup
       - name: Setup
+        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
           cache: 'npm'
           cache-dependency-path: './package-lock.json'
-        if: steps.git-diff.outputs.diff
 
       # Install
       - name: Install dependencies
-        run: npm ci --no-audit --prefer-offline --ignore-scripts
-        if: steps.git-diff.outputs.diff
+        if: env.GIT_DIFF
+        run: npm ci --no-audit --prefer-offline --ignore-scripts --ignore-scripts
 
       # Run
       - name: Typecheck
+        if: env.GIT_DIFF
         run: npm run typecheck
-        if: steps.git-diff.outputs.diff
 
   lint:
     name: 'Lint'
@@ -51,29 +50,30 @@ jobs:
 
       # Setup
       - name: Setup
+        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
           cache: 'npm'
           cache-dependency-path: './package-lock.json'
-        if: steps.git-diff.outputs.diff
 
       # Install
       - name: Install dependencies
-        run: npm ci --no-audit --prefer-offline
-        if: steps.git-diff.outputs.diff
+        if: env.GIT_DIFF
+        run: npm ci --no-audit --prefer-offline --ignore-scripts
 
       # Run
       - name: Lint
+        if: env.GIT_DIFF
         run: npm run lint
-        if: steps.git-diff.outputs.diff
 
       - name: Commit changes
+        if: env.GIT_DIFF
         uses: stefanzweifel/git-auto-commit-action@v4.1.2
         with:
           commit_message: 'style: format'
           branch: ${{ github.head_ref }}
-        if: steps.git-diff.outputs.diff
+
 
   test:
     needs: [lint, typecheck]
@@ -82,7 +82,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: technote-space/get-diff-action@v4
-        id: git-diff
         with:
           PATTERNS: |
             **/*.test.*
@@ -90,19 +89,20 @@ jobs:
 
       # Setup
       - name: Setup
+        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
           cache: 'npm'
           cache-dependency-path: './package-lock.json'
-        if: steps.git-diff.outputs.diff
+
 
       # Install
       - name: Install dependencies
-        run: npm ci --no-audit --prefer-offline
-        if: steps.git-diff.outputs.diff
+        if: env.GIT_DIFF
+        run: npm ci --no-audit --prefer-offline --ignore-scripts
 
       # Run
       - name: Test
+        if: env.GIT_DIFF
         run: npm run test
-        if: steps.git-diff.outputs.diff
