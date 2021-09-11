@@ -24,8 +24,8 @@ jobs:
           node-version: 16
           cache: 'pnpm'
           cache-dependency-path: |
-            '**/pnpm-lock.yaml'
-            '**/.eslintcache'
+            './pnpm-lock.yaml'
+            './.eslintcache'
       
       # Install
       - name: Install
