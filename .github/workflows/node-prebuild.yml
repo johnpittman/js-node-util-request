@@ -31,7 +31,7 @@ jobs:
       # Install
       - name: Install dependencies
         if: env.GIT_DIFF
-        run: npm ci --no-audit --prefer-offline --ignore-scripts --ignore-scripts
+        run: npm ci --no-audit -ignore-scripts --ignore-scripts
 
       # Run
       - name: Typecheck
@@ -60,7 +60,7 @@ jobs:
       # Install
       - name: Install dependencies
         if: env.GIT_DIFF
-        run: npm ci --no-audit --prefer-offline --ignore-scripts
+        run: npm ci --no-audit -ignore-scripts
 
       # Run
       - name: Lint
@@ -100,7 +100,7 @@ jobs:
       # Install
       - name: Install dependencies
         if: env.GIT_DIFF
-        run: npm ci --no-audit --prefer-offline --ignore-scripts
+        run: npm ci --no-audit -ignore-scripts
 
       # Run
       - name: Test
