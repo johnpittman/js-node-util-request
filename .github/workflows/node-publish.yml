@@ -1,0 +1,44 @@
+name: Node - Publish
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  publish:
+    name: 'Build && Publish'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: checkVersion
+        uses: EndBug/version-check@v1
+        with:
+          static-checking: localIsNew
+
+      - name: Setup PNPM
+        if: steps.check.outputs.changed == 'true'
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.10.0
+
+      - name: Setup Node
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/setup-node@v2
+        with:
+          check-latest: true
+          cache: 'pnpm'
+          cache-dependency-path: './pnpm-lock.yaml'
+
+      - name: Install dependencies
+        if: steps.check.outputs.changed == 'true'
+        run: pnpm install
+
+      - name: Build
+        if: steps.check.outputs.changed == 'true'
+        run: pnpm run build
+
+      - name: Publish
+        if: steps.check.outputs.changed == 'true'
+        run: pnpm publish
