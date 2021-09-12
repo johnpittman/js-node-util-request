@@ -3,7 +3,8 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "lib",
-    "outDir": "lib"
+    "outDir": "lib",
+    "sourceMap": false
   },
   "exclude": ["src/**/__*"],
   "include": ["src/**/*"]
