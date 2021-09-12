@@ -6,6 +6,6 @@ module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   testMatch: ['**/__tests__/**/?(*.)+(spec|test).+(ts|tsx|js|jsx)'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
+    '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest'
   }
 };

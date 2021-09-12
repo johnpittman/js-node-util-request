@@ -1,15 +1,15 @@
 import fetch from 'isomorphic-fetch';
 
-import request, { RequestHandlerParams, RequestMiddlewareParams } from '>/request';
+import request from '>/request';
 
 request.init({ fetch });
 
 describe('request', () => {
   let url = 'https://www.google.com';
-  let middleware = (params: RequestMiddlewareParams) => {
+  let middleware = (params) => {
     return params;
   };
-  let handler = (params: RequestHandlerParams) => {
+  let handler = (params) => {
     return params;
   };
   let errorHandler = () => {
@@ -32,8 +32,7 @@ describe('request', () => {
       res.abort();
       await res;
     } catch (err) {
-      // expect(err.type).toEqual('aborted');
-      expect(true).toEqual(true);
+      expect(err.type).toEqual('aborted');
     }
   });
 
@@ -89,7 +88,7 @@ describe('request', () => {
 
     test('returns altered result', () => {
       let params = { fetchInput: url };
-      request.use((params: RequestMiddlewareParams) => {
+      request.use((params) => {
         params.fetchInput = '1';
         return params;
       });
@@ -100,22 +99,22 @@ describe('request', () => {
   });
 
   describe('.__processHandlers', () => {
-    let handler = async (params: RequestHandlerParams) => {
+    let handler = async (params) => {
       let result = await new Promise((res) => {
         params.result += 'a';
         res(params);
       });
 
-      return result as Promise<RequestHandlerParams>;
+      return result;
     };
 
-    let handler2 = async (params: RequestHandlerParams) => {
+    let handler2 = async (params) => {
       let result = await new Promise((res) => {
         params.result += 'b';
         res(params);
       });
 
-      return result as Promise<RequestHandlerParams>;
+      return result;
     };
 
     beforeAll(() => {
