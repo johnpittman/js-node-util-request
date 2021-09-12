@@ -1,8 +1,6 @@
 name: Node - Prebuild
 
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
 
@@ -87,7 +85,6 @@ jobs:
           branch: ${{ github.head_ref }}
 
   test:
-    needs: [lint, typecheck]
     name: 'Unit Tests'
     runs-on: ubuntu-latest
     steps:
