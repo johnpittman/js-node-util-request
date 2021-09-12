@@ -11,79 +11,114 @@ jobs:
     name: 'Typecheck'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Find Changed Files
+        uses: technote-space/get-diff-action@v4
+        with:
+          PATTERNS: |
+            src/**/*.{ts,tsx}
+            **/tsconfig.json
+            **/tsconfig*.json
+
+      - name: Setup PNPM
+        if: env.GIT_DIFF
+        uses: pnpm/action-setup@v2
         with:
           version: 6.10.0
 
-      # Setup
       - name: Setup Node
+        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: './pnpm-lock.yaml'
 
-      # Install
       - name: Install
+        if: env.GIT_DIFF
         run: pnpm install
-      # Run
+        
       - name: Typecheck
+        if: env.GIT_DIFF
         run: pnpm run typecheck
 
   lint:
     name: 'Lint'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Find Changed Files
+        uses: technote-space/get-diff-action@v4
+        with:
+          PATTERNS: |
+            **/*.{js,jsx,ts,tsx,json,html}
+
+      - name: Setup PNPM
+        if: env.GIT_DIFF
+        uses: pnpm/action-setup@v2
         with:
           version: 6.10.0
 
-      # Setup
       - name: Setup Node
+        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: './pnpm-lock.yaml'
 
-      # Install
       - name: Install dependencies
+        if: env.GIT_DIFF
         run: pnpm install
-      # Run
+
       - name: Lint
+        if: env.GIT_DIFF
         run: pnpm run lint
 
       - name: Commit changes
+        if: env.GIT_DIFF
         uses: stefanzweifel/git-auto-commit-action@v4.1.2
         with:
           commit_message: 'style: format'
           branch: ${{ github.head_ref }}
-
 
   test:
     needs: [lint, typecheck]
     name: 'Test'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Find Changed Files
+        uses: technote-space/get-diff-action@v4
+        with:
+          PATTERNS: |
+            src/**/*.test.*
+            src/**/*.*
+
+      - name: Setup PNPM
+        if: env.GIT_DIFF
+        uses: pnpm/action-setup@v2
         with:
           version: 6.10.0
 
-      # Setup
       - name: Setup Node
+        if: env.GIT_DIFF
         uses: actions/setup-node@v2
         with:
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: './pnpm-lock.yaml'
 
-
-      # Install
       - name: Install dependencies
+        if: env.GIT_DIFF
         run: pnpm install
-      # Run
+
       - name: Test
+        if: env.GIT_DIFF
         run: pnpm run test
