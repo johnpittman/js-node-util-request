@@ -12,44 +12,48 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.10.0
 
       # Setup
-      - name: Setup
+      - name: Setup Node
         uses: actions/setup-node@v2
         with:
           check-latest: true
-          cache: 'npm'
-          cache-dependency-path: './package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: './pnpm-lock.yaml'
 
       # Install
-      - name: Install dependencies
-        run: npm ci --no-audit --prefer-offline --ignore-scripts
-
+      - name: Install
+        run: pnpm install
       # Run
       - name: Typecheck
-        run: npm run typecheck
+        run: pnpm run typecheck
 
   lint:
     name: 'Lint'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.10.0
 
       # Setup
-      - name: Setup
+      - name: Setup Node
         uses: actions/setup-node@v2
         with:
           check-latest: true
-          cache: 'npm'
-          cache-dependency-path: './package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: './pnpm-lock.yaml'
 
       # Install
       - name: Install dependencies
-        run: npm ci --no-audit --prefer-offline --ignore-scripts
-
+        run: pnpm install
       # Run
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.1.2
@@ -64,20 +68,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.10.0
 
       # Setup
-      - name: Setup
+      - name: Setup Node
         uses: actions/setup-node@v2
         with:
           check-latest: true
-          cache: 'npm'
-          cache-dependency-path: './package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: './pnpm-lock.yaml'
 
 
       # Install
       - name: Install dependencies
-        run: npm ci --no-audit --prefer-offline --ignore-scripts
-
+        run: pnpm install
       # Run
       - name: Test
-        run: npm run test
+        run: pnpm run test
